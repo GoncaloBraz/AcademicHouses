@@ -7,7 +7,7 @@ exports.getLoginPage = (req, res, next) => {
 
 exports.SubmitLogin = passport.authenticate("local", {
 
-    successRedirect: "/",
+    successRedirect: "/homepage",
     failureRedirect: "/"
 
 }), (req, res) => {

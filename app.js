@@ -20,6 +20,8 @@ const User = require('./api/components/user/models/user');
 const indexRoute = require('./api/routes/index');
 const registerRoute = require('./api/components/user/routes/register');
 const loginRoute = require('./api/components/user/routes/login');
+const homePageRoute = require('./api/components/user/routes/homepage');
+
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({
     extended: true
@@ -58,6 +60,7 @@ app.use((req, res, next) => {
 app.use(indexRoute);
 app.use('/register', registerRoute);
 app.use('/login', loginRoute);
+app.use('/homepage', homePageRoute);
 
 
 app.use((error, req, res, next) => {

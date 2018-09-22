@@ -1,24 +1,13 @@
-<!DOCTYPE html>
-<html>
+<% include partials/header %>
+<% include partials/navbar %>
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<h1>REGISTER PAGE</h1>
+<form method="POST" action="/register">
 
-</head>
+    <input type="text" id="username" name="username" />
+    <input type="password" id="password" name="password" />
 
-<body>
-    <h1>REGISTER PAGE</h1>
-    <form method="POST" action="/register">
-        
-        <input type="text" id="username" name="username" />
-        <input type="password" id="password" name="password" />
+    <button type="submit">Submit</button>
+</form>
 
-        <button type="submit">Submit</button>
-    </form>
-
-</body>
-
-</html>
+<% include partials/footer %>

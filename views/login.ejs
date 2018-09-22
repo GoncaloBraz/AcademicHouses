@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<% include partials/header %>
+<% include partials/navbar %>
+<h1>Login PAGE</h1>
+<form method="POST" action="/login">
 
-</head>
-<body>
-    <h1>Login PAGE</h1>
-    <form method="POST" action="/login">
-        
-        <input type="text" id="txtname" name="name" />
-        <input type="text" id="txtname" name="password" />
+    <input type="text" id="username" name="username" />
+    <input type="text" id="password" name="password" />
 
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+    <button type="submit">Submit</button>
+</form>
+<% include partials/footer %>
