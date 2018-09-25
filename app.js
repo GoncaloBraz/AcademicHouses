@@ -10,17 +10,18 @@ const passport = require('passport'),
     passportLocalMongoose = require('passport-local-mongoose'),
     session = require('express-session');
 
+const passportSetup = require('./config/passport-setup');
+
 mongoose.connect('mongodb+srv://gbraz:'+process.env.MONGO_ATLAS_PW+'@academichousescluster0-1cu9f.mongodb.net/test?retryWrites=true', {
     useNewUrlParser: true
 });
 mongoose.Promise = global.Promise;
 // MODELS
-const User = require('./api/components/user/models/user');
+const User = require('./api/components/user/models/userModel');
 // COMPONENTS
 const indexRoute = require('./api/routes/index');
-const registerRoute = require('./api/components/user/routes/register');
-const loginRoute = require('./api/components/user/routes/login');
-const homePageRoute = require('./api/components/user/routes/homepage');
+const authRoute = require('./api/components/user/routes/authRoutes');
+const homePageRoute = require('./api/components/user/routes/homepageRoutes');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({
@@ -38,14 +39,14 @@ app.use(session({
     saveUninitialized: false
 }))
 
-app.use(passport.initialize());
+/* app.use(passport.initialize());
 
-app.use(passport.session());
+app.use(passport.session()); */
 
-passport.use(new LocalStrategy(User.authenticate()));
+/* passport.use(new LocalStrategy(User.authenticate())); */
 
-passport.serializeUser(User.serializeUser()); // JSON --> String
-passport.deserializeUser(User.deserializeUser()); // String --> JSON
+/* passport.serializeUser(User.serializeUser()); // JSON --> String
+passport.deserializeUser(User.deserializeUser()); // String --> JSON */
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -57,9 +58,11 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(indexRoute);
-app.use('/register', registerRoute);
-app.use('/login', loginRoute);
+
+
+app.use('/index', indexRoute);
+
+app.use('/auth', authRoute);
 app.use('/homepage', homePageRoute);
 
 
