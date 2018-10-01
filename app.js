@@ -1,5 +1,6 @@
 const express = require('express');
-const app = express();
+const cookieSession = require('cookie-session');
+
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -10,7 +11,20 @@ const passport = require('passport'),
     passportLocalMongoose = require('passport-local-mongoose'),
     session = require('express-session');
 
-const passportSetup = require('./config/passport-setup');
+const passportSetup = require('./config/passport-setup-google');
+const passportfacebook = require('./config/passport-setup-facebook');
+
+const app = express();
+const keys = require('./config/keys');
+
+// set up session cookies
+app.use(cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [keys.session.cookieKey]
+})); 
+
+app.use(passport.initialize());
+app.use(passport.session());  
 
 mongoose.connect('mongodb+srv://gbraz:'+process.env.MONGO_ATLAS_PW+'@academichousescluster0-1cu9f.mongodb.net/test?retryWrites=true', {
     useNewUrlParser: true
@@ -28,7 +42,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-
+app.set('trust proxy', 1) // trust first proxy
 app.use(express.static('public'));
 app.use(methodOverride("_method"));
 app.set('view engine', 'ejs');
@@ -38,15 +52,6 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
-
-/* app.use(passport.initialize());
-
-app.use(passport.session()); */
-
-/* passport.use(new LocalStrategy(User.authenticate())); */
-
-/* passport.serializeUser(User.serializeUser()); // JSON --> String
-passport.deserializeUser(User.deserializeUser()); // String --> JSON */
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -61,12 +66,13 @@ app.use((req, res, next) => {
 
 
 app.use('/index', indexRoute);
-
 app.use('/auth', authRoute);
 app.use('/homepage', homePageRoute);
 
 
-app.use((error, req, res, next) => {
+
+
+/* app.use((error, req, res, next) => {
     res.status(error.status || 500);
     res.json({
         error: {
@@ -83,6 +89,6 @@ app.use((error, req, res, next) => {
             message: error.message
         }
     })
-})
+}) */
 
 module.exports = app;
