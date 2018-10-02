@@ -13,6 +13,7 @@ const passport = require('passport'),
 
 const passportSetup = require('./config/passport-setup-google');
 const passportfacebook = require('./config/passport-setup-facebook');
+const passportLocal = require('./config/passport-setup-local');
 
 const app = express();
 const keys = require('./config/keys');
@@ -68,7 +69,6 @@ app.use((req, res, next) => {
 app.use('/index', indexRoute);
 app.use('/auth', authRoute);
 app.use('/homepage', homePageRoute);
-
 
 
 

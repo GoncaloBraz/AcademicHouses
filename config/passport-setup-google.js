@@ -25,7 +25,7 @@ passport.use(new GoogleStrategy({
 
     // check if user already exists
     User.findOne({
-        googleId: profile.id
+        platformId: profile.id
     }).then((currentUser) => {
         if (currentUser) {
 
@@ -41,7 +41,8 @@ passport.use(new GoogleStrategy({
                 } else {
                     new User({
                         username: profile.displayName,
-                        googleId: profile.id
+                        password: '',
+                        platformId: profile.id
                     })
                         .save()
                         .then((newUser) => {

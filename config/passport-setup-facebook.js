@@ -27,7 +27,7 @@ passport.use(new FacebookStrategy({
 
     // check if user already exists
     User.findOne({
-        googleId: profile.id,
+        platformId: profile.id,
         username: profile.displayName
     }).then((currentUser) => {
         if (currentUser) {
@@ -39,7 +39,8 @@ passport.use(new FacebookStrategy({
 
             new User({
                 username: profile.displayName,
-                googleId: profile.id
+                password: '',
+                platformId: profile.id
             })
                 .save()
                 .then((newUser) => {
