@@ -67,7 +67,8 @@ exports.logout = (req, res, next) => {
 exports.getAdminPage = (req, res, next) => {
     
     res.render('admin'), {
-        user: req.user
+        user: req.user,
+        locations: req.locations
     }
 }
 

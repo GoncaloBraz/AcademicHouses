@@ -1,8 +1,13 @@
 const User = require('../models/userModel');
 
+
 exports.requireAdmin = (req, res, next) => {
+
+const password =  req.body.password;
+
     User.findOne({
         username: req.body.username
+
     }, (err, user) => {
         if (err) {
             return next(err)
@@ -13,7 +18,12 @@ exports.requireAdmin = (req, res, next) => {
         if (!user.admin) {
             return next();
         }
-        res.redirect('admin');
+        if(user.password == password){
+            res.redirect('admin');
+        }else{
+            res.send("Password incorrecta");
+        }
+
     })
 }
 

@@ -33,10 +33,12 @@ mongoose.connect('mongodb+srv://gbraz:'+process.env.MONGO_ATLAS_PW+'@academichou
 mongoose.Promise = global.Promise;
 // MODELS
 const User = require('./api/components/user/models/userModel');
+const Location = require('./api/components/location/models/locationModel');
 // COMPONENTS
 const indexRoute = require('./api/routes/index');
 const authRoute = require('./api/components/user/routes/authRoutes');
 const homePageRoute = require('./api/components/user/routes/homepageRoutes');
+const locationRoute = require('./api/components/location/routes/addLocationRoutes');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({
@@ -69,7 +71,7 @@ app.use((req, res, next) => {
 app.use('/index', indexRoute);
 app.use('/auth', authRoute);
 app.use('/homepage', homePageRoute);
-
+app.use('/location', locationRoute);
 
 
 /* app.use((error, req, res, next) => {
