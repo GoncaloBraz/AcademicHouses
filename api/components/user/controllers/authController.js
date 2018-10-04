@@ -27,6 +27,7 @@ exports.postRegister = (req, res, next) => {
                 newUser.username = username;
                 newUser.password = newUser.hashPassword(password);
                 newUser.platformId = 'Local';
+                newUser.admin = false;
 
                 newUser.save();
                 res.redirect('/auth/login');
@@ -36,9 +37,13 @@ exports.postRegister = (req, res, next) => {
 }
 
 
-exports.postLogin = (req, res, next) => {
-    res.send('hey')
+exports.postLogin = passport.authenticate('local', {
+    successRedirect: '/homepage',
+    failureRedirect: '/index',
 
+}) , (req, res, next) => {
+
+    console.log(req.user.username)
 }
 
 exports.getLoginPage = (req, res, next) => {
@@ -57,4 +62,11 @@ exports.logout = (req, res, next) => {
     res.redirect('/index');
 }
 
+
+exports.getAdminPage = (req, res, next) => {
+    
+    res.render('admin'), {
+        user: req.user
+    }
+}
 

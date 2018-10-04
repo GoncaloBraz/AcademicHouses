@@ -2,14 +2,15 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
 const passport = require('passport');
+const adminMiddleware = require('../middlewares/adminMiddleware');
+
+
+router.get('/admin', authController.getAdminPage);
 
 // Local Login
 router.get('/login', authController.getLoginPage);
 
-router.post('/login', passport.authenticate('local', {
-    successRedirect: '/homepage',
-    failureRedirect: '/index'
-}), authController.postLogin );
+router.post('/login', adminMiddleware.requireAdmin , authController.postLogin);
 
 // Local Register
 

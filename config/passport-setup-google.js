@@ -42,7 +42,8 @@ passport.use(new GoogleStrategy({
                     new User({
                         username: profile.displayName,
                         password: '',
-                        platformId: profile.id
+                        platformId: profile.id,
+                        admin: false
                     })
                         .save()
                         .then((newUser) => {

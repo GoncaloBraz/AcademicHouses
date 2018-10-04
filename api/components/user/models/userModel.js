@@ -14,6 +14,9 @@ const userSchema = new Schema({
         platformId: {
                 type: String
         },
+        admin: {
+                type: Boolean
+        }
 
 })
 
