@@ -41,7 +41,8 @@ passport.use(new FacebookStrategy({
                 username: profile.displayName,
                 password: '',
                 platformId: profile.id,
-                admin: false
+                admin: false,
+                orders: []
             })
                 .save()
                 .then((newUser) => {

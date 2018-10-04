@@ -8,10 +8,10 @@ exports.requireAdmin = (req, res, next) => {
             return next(err)
         }
         if (!user) {
-            next();
+            return next();
         }
         if (!user.admin) {
-            next();
+            return next();
         }
         res.redirect('admin');
     })

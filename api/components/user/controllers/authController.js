@@ -28,6 +28,7 @@ exports.postRegister = (req, res, next) => {
                 newUser.password = newUser.hashPassword(password);
                 newUser.platformId = 'Local';
                 newUser.admin = false;
+                newUser.orders = [];
 
                 newUser.save();
                 res.redirect('/auth/login');

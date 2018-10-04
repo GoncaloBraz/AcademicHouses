@@ -16,7 +16,14 @@ const userSchema = new Schema({
         },
         admin: {
                 type: Boolean
-        }
+        },
+        orders: [
+                {
+                        orderId: {
+                                type: String
+                        },
+                }
+        ]
 
 })
 
